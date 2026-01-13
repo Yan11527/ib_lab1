@@ -62,7 +62,7 @@ configurations.all {
 
 
 spotbugs {
-	toolVersion = '5.0.14'
+	toolVersion = '4.9.8'
 	effort = 'max'
 	reportLevel = 'low'
 	ignoreFailures = true
