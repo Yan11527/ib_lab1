@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Регистрация</title>
+    </head>
+    <body>
+        <form action="/auth/register" method="post">
+            <div>
+                <label for="reg-username">Логин:</label>
+                <input type="text" id="reg-username" name="username" required>
+            </div>
+            <div>
+                <label for="reg-password">Пароль:</label>
+                <input type="password" id="reg-password" name="password" minlength="8" required>
+            </div>
+            <div>
+                <button type="submit">Регистрация</button>
+            </div>
+        </form>
+        <form id="loginForm">
+            <div>
+                <label for="login-username">Логин:</label>
+                <input type="text" id="login-username" name="username" required>
+            </div>
+            <div>
+                <label for="login-password">Пароль:</label>
+                <input type="password" id="login-password" name="password" minlength="8" required>
+            </div>
+            <div>
+                <button type="submit">Войти</button>
+            </div>
+        </form>
+        
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const token = await response.text();
+                
+                if (token === 'error') {
+                    alert('Error');
+                    return;
+                }
+                window.location.href = '/data?token=' + encodeURIComponent(token);
+            });
+        </script>
+    </body>
+</html>

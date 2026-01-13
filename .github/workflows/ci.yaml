@@ -1,0 +1,57 @@
+name: Безопасность
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Код
+      uses: actions/checkout@v4
+      
+    - name: Права
+      run: chmod +x ./gradlew
+      
+    - name: Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+          
+    - name: SpotBugs
+      run: ./gradlew spotbugsMain
+      continue-on-error: true
+      
+    - name: Загрузить отчет SpotBugs
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: spotbugs-report
+        path: build/reports/spotbugs/
+        retention-days: 30
+      
+    - name: Snyk
+      uses: snyk/actions/setup@master
+      continue-on-error: true
+      
+    - name: Snyk Test
+      run: snyk test --severity-threshold=high --json-file-output=snyk-report.json
+      continue-on-error: true
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        
+    - name: Загрузить отчет Snyk
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: snyk-report
+        path: snyk-report.json
+        retention-days: 30
+        
+    - name: Сборка
+      run: ./gradlew build

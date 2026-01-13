@@ -1,0 +1,86 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.6'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.github.spotbugs' version '6.0.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'lab1'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+compileJava {
+	options.compilerArgs += ['-parameters']
+}
+
+repositories {
+	mavenCentral()
+}
+
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		runtimeOnly 'org.postgresql:postgresql'
+		testRuntimeOnly 'com.h2database:h2'
+		implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+		implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+		runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+		runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+	implementation 'org.springframework.security:spring-security-crypto:6.3.8'
+	implementation 'org.apache.commons:commons-lang3:3.18.0'
+	implementation 'org.apache.commons:commons-text:1.14.0'
+	implementation 'org.apache.bcel:bcel:6.10.0'
+	}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+configurations.all {
+	resolutionStrategy {
+		force 'org.apache.commons:commons-lang3:3.18.0'
+		force 'org.apache.commons:commons-text:1.14.0'
+		force 'org.apache.bcel:bcel:6.10.0'
+	}
+}
+
+
+spotbugs {
+	toolVersion = '4.9.4'
+	effort = 'max'
+	reportLevel = 'low'
+	ignoreFailures = true
+}
+
+spotbugsMain {
+	reports {
+		html {
+			required = true
+			outputLocation = file("$buildDir/reports/spotbugs/main.html")
+			stylesheet = 'fancy-hist.xsl'
+		}
+		xml {
+			required = false
+		}
+	}
+}
+
+spotbugsTest {
+	reports {
+		html {
+			required = true
+			outputLocation = file("$buildDir/reports/spotbugs/test.html")
+			stylesheet = 'fancy-hist.xsl'
+		}
+	}
+}
+
+

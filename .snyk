@@ -1,0 +1,9 @@
+version: v1.25.1
+
+ignore:
+  SNYK-JAVA-ORGAPACHECOMMONS-10734078:
+    - '*':
+        reason: SpotBugs is a development tool and doesn't affect runtime security
+        expires: '2025-12-31T23:59:59.999Z'
+
+patch: {}

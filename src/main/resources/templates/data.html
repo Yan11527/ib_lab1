@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Список юзеров</title>
+    </head>
+    <body>
+        <h1> Users:</h1>
+        <ul>
+            <li th:each="user:${users}" th:text="${user.username}">username</li>
+        </ul>
+        <div th:if="${currentUser!=null}">
+            <p>Current user: <span th:text="${currentUser}"></span></p>
+            <form action="/auth/delete" method="post">
+                <input type="hidden" name="username" th:value="${currentUser}"/>
+                <button type="submit">Удалить пользователя</button>
+            </form>
+        </div>
+    </body>
+</html>
