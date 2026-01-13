@@ -179,8 +179,8 @@ GET /
 - **Автоматические отчеты** загружаются как артефакты
 
 - **Успешный pipeline**: https://github.com/Yan11527/ib_lab1/actions/runs/20965936673
-- **SpotBugs**: ![spotbugs] (https://raw.githubusercontent.com/Yan11527/ib_lab1/refs/heads/main/spotbug.png)
-- **SCA**: ![snyk] (https://raw.githubusercontent.com/Yan11527/ib_lab1/refs/heads/main/snyk.png)
+- **SAST**:![spotbugs](https://raw.githubusercontent.com/Yan11527/ib_lab1/refs/heads/main/spotbug.png)
+- **SCA**:![snyk](https://raw.githubusercontent.com/Yan11527/ib_lab1/refs/heads/main/snyk.png)
 
 ### Страницы ошибок
 - **redirect-error.html**: Общая страница ошибок
