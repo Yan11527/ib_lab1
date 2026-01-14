@@ -36,8 +36,15 @@ public class JwtFilter implements Filter {
             }
             
             if (token == null || !jwtUtil.validateToken(token)) {
-                res.sendRedirect("/redirect-error");
-                return;
+                if (path.startsWith("/api/")) {
+                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    res.setContentType("application/json");
+                    res.getWriter().write("{\"error\":\"Unauthorized\",\"message\":\"token not found\"}");
+                    return;
+                } else {
+                    res.sendRedirect("/redirect-error");
+                    return;
+                }
             }
             
             req.setAttribute("currentUser", jwtUtil.getUsernameFromToken(token));
