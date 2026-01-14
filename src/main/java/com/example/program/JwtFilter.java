@@ -36,7 +36,7 @@ public class JwtFilter implements Filter {
             }
             
             if (token == null || !jwtUtil.validateToken(token)) {
-                res.sendRedirect("/redirect-error.html");
+                res.sendRedirect("/redirect-error");
                 return;
             }
             
